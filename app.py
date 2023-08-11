@@ -15,6 +15,7 @@ import asyncio
 # Then, outside imports (these must be installed into your active Python environment).
 from shiny import App, ui   # pip install shiny
 import shinyswatch          # pip install shinyswatch
+from shiny import App, Inputs, Outputs, Session, reactive, render, ui
 
 # Finally, import what we need from other local code files.
 from continuous_location import update_csv_location
@@ -31,18 +32,16 @@ logger, logname = setup_logger(__file__)
 # Define a function that will run continuously to update our data.
 # We update to a local file, but we could also update to a database.
 # Or a cloud service. Or a data lake. Or a data warehouse.
-
 async def update_csv_files():
     while True:
         logger.info("Calling continuous updates ...")
         task1 = asyncio.create_task(update_csv_location())
         task2 = asyncio.create_task(update_csv_stock())
-        await asyncio.gather(task1)
-        await asyncio.gather(task2)
-        await asyncio.sleep(60)  # wait for 60 seconds  
+        await asyncio.gather(task1, task2)
+        await asyncio.sleep(60)  # wait for 60 seconds
 
 app_ui = ui.page_navbar(
-    shinyswatch.theme.lumen(),
+    shinyswatch.theme.superhero(),
     ui.nav(
         "MT_Cars",
         ui.layout_sidebar(
@@ -62,9 +61,7 @@ app_ui = ui.page_navbar(
 )
 
 
-
-
-
+ 
 
 def server(input, output, session):
     """Define functions to create UI outputs."""
