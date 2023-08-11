@@ -21,13 +21,13 @@ def get_mtcars_inputs():
             max=35,
             value=[10, 35],
         ),
-        ui.input_select(
+        ui.input_radio_buttons(
             id="MTCARS_LOCATION_SELECT",
             label="Choose a location",
             choices=["ELY MN", "Death Valley CA", "Maryville MO"],
             selected="ELY MN",
         ),
-        ui.input_select(
+        ui.input_radio_buttons(
         id="MTCARS_COMPANY_SELECT",
         label="Choose a Company",
         choices=["Tesla Inc",
